@@ -9,9 +9,14 @@ function MainNav({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
   const parms = useParams();
   const routes = [
     {
+      href: `${parms.storeId}/`,
+      label: "Overview",
+      active: pathname === `/${parms.storeId}`,
+    },
+    {
       href: `${parms.storeId}/settings`,
       label: "Settings",
-      active: pathname === `${parms.storeId}/settings`,
+      active: pathname === `/${parms.storeId}/settings`,
     },
   ];
   return (
@@ -23,7 +28,7 @@ function MainNav({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
             href={`/${route.href}`}
             className={cn(
               "text-sm font-medium transition-colors hover:text-primary",
-              route.active ? 'text-black dark:text-white' : 'text-muted-foreground'
+              route.active ? 'text-black  dark:text-white' : 'text-muted-foreground'
             )}
           >
             {route.label}

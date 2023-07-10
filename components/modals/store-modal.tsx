@@ -1,7 +1,7 @@
 "use client";
 
 import { useStoreModal } from "@/hooks/use-store-modal";
-import { Modal } from "../ui/Modal";
+import { Modal } from "../ui/modal";
 import { useForm } from "react-hook-form";
 import {
   FormModalRequest,
@@ -10,16 +10,14 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { useMutation } from "@tanstack/react-query";
-import axios, { Axios, AxiosError } from "axios";
+import axios, {  AxiosError } from "axios";
 import { Label } from "../ui/label";
 import { Button } from "../ui/Button";
 import { toast } from "@/hooks/use-toast";
-import { useRouter } from "next/navigation";
 
 export const StoreModal = () => {
   const storeModal = useStoreModal();
 
-  const router = useRouter();
   const {
     register,
     handleSubmit,
