@@ -14,10 +14,12 @@ import axios, { Axios, AxiosError } from "axios";
 import { Label } from "../ui/label";
 import { Button } from "../ui/Button";
 import { toast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 export const StoreModal = () => {
   const storeModal = useStoreModal();
 
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -30,7 +32,7 @@ export const StoreModal = () => {
     },
   });
 
-  const { mutate: createStore } = useMutation({
+  const { mutate: createStore, isLoading } = useMutation({
     mutationFn: async ({ name }: FormModalRequest) => {
       const payload = {
         name,
@@ -47,16 +49,29 @@ export const StoreModal = () => {
             variant: "destructive",
           });
         }
+        if (err.response?.status === 409) {
+          return toast({
+            title: "Store already exists",
+            description: "Please try again with a different name.",
+            variant: "destructive",
+          });
+        }
       }
+      toast({
+        title: "Error creating store",
+        description: "Please try again later.",
+        variant: "destructive",
+      });
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
+
       toast({
         title: "Store created",
-        description: "Your store was created successfully.",
-        variant: 'default',
+        description: "You can now add products and manage orders.",
+
       });
-      storeModal.onClose();
-    }
+      window.location.assign(`/${data.id}`);
+    },
   });
 
   return (
@@ -88,7 +103,9 @@ export const StoreModal = () => {
           <Button variant="outline" onClick={storeModal.onClose}>
             Cancel
           </Button>
-          <Button type="submit">Create</Button>
+          <Button type="submit" isLoading={isLoading}>
+            Create
+          </Button>
         </div>
       </form>
     </Modal>
