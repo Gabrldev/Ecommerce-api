@@ -10,9 +10,10 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Input } from "../ui/input";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
+import axios, { Axios, AxiosError } from "axios";
 import { Label } from "../ui/label";
 import { Button } from "../ui/Button";
+import { toast } from "@/hooks/use-toast";
 
 export const StoreModal = () => {
   const storeModal = useStoreModal();
@@ -34,9 +35,28 @@ export const StoreModal = () => {
       const payload = {
         name,
       };
-      const { data } = await axios.post("/api/store", payload);
+      const { data } = await axios.post("/api/stores/create", payload);
       return data;
     },
+    onError: (err) => {
+      if (err instanceof AxiosError) {
+        if (err.response?.status === 404) {
+          return toast({
+            title: "Error connecting to server",
+            description: "Please try again later.",
+            variant: "destructive",
+          });
+        }
+      }
+    },
+    onSuccess: () => {
+      toast({
+        title: "Store created",
+        description: "Your store was created successfully.",
+        variant: 'default',
+      });
+      storeModal.onClose();
+    }
   });
 
   return (
