@@ -1,5 +1,5 @@
 "use client";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -26,6 +26,7 @@ import {
   BillboardValidator,
 } from "@/lib/validators/billboard";
 import { useMutation } from "@tanstack/react-query";
+import { toast } from "@/hooks/use-toast";
 
 interface BillboardFormProps {
   initialData: Billboard | null;
@@ -42,6 +43,13 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
   const title = initialData ? "Edit billboard" : "Create billboard";
   const description = initialData ? "Edit a billboard." : "Add a new billboard";
   const action = initialData ? "Save changes" : "Create";
+  const mensaje = initialData ? "Billboard saved" : "Billboard created";
+  const mensajeDescription = initialData
+    ? "Update billboard sucesss"
+    : "Create billboard sucesss";
+  const errorMensaje = initialData
+    ? "Error updating billboard"
+    : "Error creating billboard";
 
   const form = useForm<BillboardRequest>({
     resolver: zodResolver(BillboardValidator),
@@ -67,10 +75,64 @@ export const BillboardForm: React.FC<BillboardFormProps> = ({
         await axios.post(`/api/${params.storeId}/billboards`, payload);
       }
     },
+
+    onSuccess: () => {
+      router.refresh();
+      router.push(`/${params.storeId}/billboards`);
+      return toast({
+        title: mensaje,
+        description: mensajeDescription,
+      });
+    },
+    onError: (error) => {
+      return toast({
+        title: "Error",
+        description: errorMensaje,
+        variant: initialData ? "default" : "destructive",
+      });
+    },
   });
 
   const { mutate: onDelete, isLoading: isLoadingDelate } = useMutation({
-    mutationFn: async () => {},
+    mutationFn: async () => {
+      const res = await axios.delete(
+        `/api/${params.storeId}/billboards/${params.billboardId}`
+      );
+      return res.data;
+    },
+
+    onSuccess: () => {
+      router.refresh();
+      router.push(`/${params.storeId}/billboards`);
+      return toast({
+        title: "Billboard deleted",
+        description: "Billboard deleted sucesss",
+      });
+    },
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        if (error.response?.status === 401) {
+          return toast({
+            title: "Error",
+            description: "You don't have permissions to delete this billboard",
+            variant: "destructive",
+          });
+        }
+        if (error.response?.status === 400) {
+          return toast({
+            title: "Error",
+            description:
+              "You can't delete this billboard because it has products",
+            variant: "destructive",
+          });
+        }
+      }
+      return toast({
+        title: "Error",
+        description: "Error deleting billboard",
+        variant: "destructive",
+      });
+    },
   });
 
   return (
