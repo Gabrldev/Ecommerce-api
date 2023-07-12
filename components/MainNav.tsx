@@ -14,10 +14,15 @@ function MainNav({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
       active: pathname === `/${parms.storeId}`,
     },
     {
+      href: `${parms.storeId}/billboards`,
+      label: "Billboards",
+      active: pathname === `/${parms.storeId}/billboards`,
+    },
+    {
       href: `${parms.storeId}/settings`,
       label: "Settings",
       active: pathname === `/${parms.storeId}/settings`,
-    },
+    }
   ];
   return (
     <nav className={cn("flex items-center space-x-4 lg:space-x-6", className)}>
