@@ -5,10 +5,11 @@ import { Button } from "./ui/Button";
 import { Heading } from "./ui/heading";
 import { Separator } from "./ui/separator";
 import { useParams, useRouter } from "next/navigation";
-import { Billboard } from "@prisma/client";
+import { BillboardColumms, columns } from "./columms";
+import { DataTable } from "./ui/dataTable";
 
 interface BillboardClientProps {
-  data: Billboard[];
+  data: BillboardColumms[];
 }
 
 export const BillboardClient = ({ data }: BillboardClientProps) => {
@@ -34,6 +35,7 @@ export const BillboardClient = ({ data }: BillboardClientProps) => {
         </Button>
       </div>
       <Separator />
+      <DataTable columns={columns} data={data} searchKey="label" />
     </>
   );
 };
