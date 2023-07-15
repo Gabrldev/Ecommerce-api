@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const UseOrigin = () => {
+export const useOrigin = () => {
 
   const [moutend, setMoutend] = useState(false);
 

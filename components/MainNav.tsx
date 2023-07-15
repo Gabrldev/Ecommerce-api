@@ -13,16 +13,22 @@ function MainNav({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
       label: "Overview",
       active: pathname === `/${parms.storeId}`,
     },
+
     {
       href: `${parms.storeId}/billboards`,
       label: "Billboards",
       active: pathname === `/${parms.storeId}/billboards`,
     },
     {
+      href: `${parms.storeId}/categories`,
+      label: "Categories",
+      active: pathname === `/${parms.storeId}/categories`,
+    },
+    {
       href: `${parms.storeId}/settings`,
       label: "Settings",
       active: pathname === `/${parms.storeId}/settings`,
-    }
+    },
   ];
   return (
     <nav className={cn("flex items-center space-x-4 lg:space-x-6", className)}>
@@ -33,7 +39,9 @@ function MainNav({ className, ...props }: React.HTMLAttributes<HTMLElement>) {
             href={`/${route.href}`}
             className={cn(
               "text-sm font-medium transition-colors hover:text-primary",
-              route.active ? 'text-black  dark:text-white' : 'text-muted-foreground'
+              route.active
+                ? "text-black  dark:text-white"
+                : "text-muted-foreground"
             )}
           >
             {route.label}

@@ -19,7 +19,7 @@ import { toast } from "@/hooks/use-toast";
 import { AlertModal } from "./modals/alert-modal";
 import { useState } from "react";
 import { ApiAlert } from "./ui/api-alert";
-import { UseOrigin } from "@/hooks/use-origin";
+import { useOrigin } from "@/hooks/use-origin";
 
 interface Props {
   initialData: Store;
@@ -37,7 +37,7 @@ function SettingsForm({ initialData }: Props) {
 
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const origin = UseOrigin();
+  const origin = useOrigin();
 
   const { mutate: changeNameStore, isLoading } = useMutation({
     mutationFn: async ({ name }: ChangeNameStoreRequest) => {
