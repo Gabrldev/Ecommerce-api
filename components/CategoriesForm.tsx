@@ -72,17 +72,17 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
       };
       if (initialData) {
         await axios.patch(
-          `/api/${params.storeId}/Categorys/${initialData.id}`,
+          `/api/${params.storeId}/categories/${initialData.id}`,
           payload
         );
       } else {
-        await axios.post(`/api/${params.storeId}/Categorys`, payload);
+        await axios.post(`/api/${params.storeId}/categories`, payload);
       }
     },
 
     onSuccess: () => {
       router.refresh();
-      router.push(`/${params.storeId}/Categorys`);
+      router.push(`/${params.storeId}/categories`);
       return toast({
         title: mensaje,
         description: mensajeDescription,
@@ -100,14 +100,14 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
   const { mutate: onDelete, isLoading: isLoadingDelate } = useMutation({
     mutationFn: async () => {
       const res = await axios.delete(
-        `/api/${params.storeId}/Categorys/${params.CategoryId}`
+        `/api/${params.storeId}/categories/${params.CategoryId}`
       );
       return res.data;
     },
 
     onSuccess: () => {
       router.refresh();
-      router.push(`/${params.storeId}/Categorys`);
+      router.push(`/${params.storeId}/categories`);
       return toast({
         title: "Category deleted",
         description: "Category deleted sucesss",

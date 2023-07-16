@@ -25,7 +25,7 @@ export default async function BillboardsPage({ params }: Props) {
   const formattedCategory: CategoryColumms[] = categories.map((item) => {
     return {
       id: item.id,
-      name: item.mame,
+      name: item.name,
       billboardLabel: item.billboard.label,
       createdAt: format(new Date(item.createdAt), "MMMM-do-yyyy"),
     };
