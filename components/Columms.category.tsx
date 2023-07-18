@@ -1,6 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
+import { CellActionCategory } from "./CellActionCategory";
 
 export type CategoryColumms = {
   id: string;
@@ -23,5 +24,8 @@ export const CategoryColumns: ColumnDef<CategoryColumms>[] = [
   {
     accessorKey: "createdAt",
     header: "Date",
+  },{
+    id: "action",
+    cell: ({ row }) => <CellActionCategory data={row.original} />,
   }
 ];

@@ -1,7 +1,5 @@
 "use client";
-
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
-import { BillboardColumms } from "./columms";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,10 +14,11 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { AlertModal } from "./modals/alert-modal";
 import axios from "axios";
+import { CategoryColumms } from "./Columms.category";
 interface CelActionProps {
-  data: BillboardColumms;
+  data: CategoryColumms;
 }
-export const CellAction: React.FC<CelActionProps> = ({ data }) => {
+export const CellActionCategory: React.FC<CelActionProps> = ({ data }) => {
   const router = useRouter();
 
   const params = useParams();
@@ -36,15 +35,15 @@ export const CellAction: React.FC<CelActionProps> = ({ data }) => {
 
   const { mutate: onDelate, isLoading, } = useMutation({
     mutationFn: async () => {
-      await axios.delete(`/api/${params.storeId}/billboards/${data.id}`);
+      await axios.delete(`/api/${params.storeId}/categories/${data.id}`);
     },
 
     onSuccess: () => {
       router.refresh();
-      router.push(`/${params.storeId}/billboards`);
+      router.push(`/${params.storeId}/categories`);
       toast({
-        title: "Billboard deleted",
-        description: "The billboard was deleted successfully",
+        title: "Category deleted",
+        description: "The Category was deleted successfully",
       });
 
       setIsOpen(false);
@@ -52,7 +51,7 @@ export const CellAction: React.FC<CelActionProps> = ({ data }) => {
     onError: () => {
       toast({
         title: "Error",
-        description: "The billboard was not deleted",
+        description: "The Category was not deleted",
       });
     },
   });
@@ -76,7 +75,7 @@ export const CellAction: React.FC<CelActionProps> = ({ data }) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.storeId}/billboards/${data.id}`)
+              router.push(`/${params.storeId}/categories/${data.id}`)
             }
           >
             <Edit className="h-4 w-4 mr-2" />

@@ -46,3 +46,9 @@ model Category {
   @@index([storeId])
   @@index([billboardId])
 }
+
+model Size {
+  id       String   @id @default(uuid())
+  storeId  String
+  
+}

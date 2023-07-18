@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs";
 import { db } from "@/lib/db";
-import { X } from "lucide-react";
 import { CategoryValidator } from "@/lib/validators/category";
+import { z } from "zod";
 
 export async function GET(
   req: Request,
@@ -20,7 +20,11 @@ export async function GET(
     if (!category) return new Response("Not Found", { status: 404 });
 
     return new Response(JSON.stringify(category), { status: 200 });
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof z.ZodError)
+      return new Response(error.message, { status: 400 });
+    else return new Response("Internal Server Error", { status: 500 });
+  }
 }
 
 export async function PATCH(
@@ -64,7 +68,13 @@ export async function PATCH(
     });
 
     return new Response("Updated", { status: 200 });
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return new Response(error.message, { status: 400 });
+    } else {
+      return new Response("Internal Server Error", { status: 500 });
+    }
+  }
 }
 
 export async function DELETE(
@@ -95,5 +105,11 @@ export async function DELETE(
     });
 
     return new Response("Deleted", { status: 200 });
-  } catch (error) {}
+  } catch (error) {
+    if (error instanceof z.ZodError) {
+      return new Response(error.message, { status: 400 });
+    } else {
+      return new Response("Internal Server Error", { status: 500 });
+    }
+  }
 }

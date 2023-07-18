@@ -1,8 +1,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { headers } from "next/dist/client/components/headers";
-import { CellAction } from "./cellAction";
+import { CellActionBillboard } from "./CellActionBillboard";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
@@ -23,6 +22,6 @@ export const columns: ColumnDef<BillboardColumms>[] = [
   },
   {
     id: "action",
-    cell: ({ row }) => <CellAction data={row.original} />,
+    cell: ({ row }) => <CellActionBillboard data={row.original} />,
   },
 ];
