@@ -66,7 +66,6 @@ export async function GET(
 
     return new Response(JSON.stringify(billboards), {
       status: 200,
-      headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
     return new Response("Could not get billboards, please try again later", {

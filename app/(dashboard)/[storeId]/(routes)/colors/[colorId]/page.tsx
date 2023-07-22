@@ -1,25 +1,25 @@
-import { SizeForm } from "@/components/SizeForm";
+import { ColorForm } from "@/components/ColorForm";
 import { db } from "@/lib/db";
 
-type BillboardPageProps = {
+type ColorPageProps = {
   params: {
-    sizeId: string;
+    colorId: string;
   };
 };
 
-const BillboardPage = async ({ params }: BillboardPageProps) => {
-  const sizes = await db.size.findUnique({
+const BillboardPage = async ({ params }: ColorPageProps) => {
+  const color = await db.color.findUnique({
     where: {
-      id: params.sizeId,
+      id: params.colorId,
     },
   });
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <SizeForm initialData={sizes} />
+        <ColorForm initialData={color} />
       </div>
     </div>
-  )
+  );
 };
 
 export default BillboardPage;

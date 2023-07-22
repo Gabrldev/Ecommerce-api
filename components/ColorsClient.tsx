@@ -7,10 +7,11 @@ import { Separator } from "./ui/separator";
 import { useParams, useRouter } from "next/navigation";
 import { DataTable } from "./ui/dataTable";
 import { ApiList } from "./ui/apiList";
-import { SizeColumms } from "./Columms.sizes";
+import { ColorColumms, ColorsColumms } from "./Coloumms.colors";
+
 
 interface ColorsProps {
-  data: SizeColumms[];
+  data: ColorColumms[];
 }
 
 export const ColorsClient = ({ data }: ColorsProps) => {
@@ -36,7 +37,7 @@ export const ColorsClient = ({ data }: ColorsProps) => {
         </Button>
       </div>
       <Separator />
-      <DataTable columns={SizeColumms} data={data} searchKey="name" />
+      <DataTable columns={ColorsColumms} data={data} searchKey="name" />
       <Heading title="API" description="Api calls for Colors" />
       <Separator />
       <ApiList entityName="colors" entityIdName="colorId" />

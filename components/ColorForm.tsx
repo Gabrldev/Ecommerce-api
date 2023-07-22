@@ -21,19 +21,19 @@ import { AlertModal } from "@/components/modals/alert-modal";
 import { Button } from "./ui/Button";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
-import { SizesRequest, SizesValidator } from "@/lib/validators/sizes";
+import { ColorRequest, colorValidator } from "@/lib/validators/color";
 
 interface SizeFormProps {
   initialData: Size | null;
 }
 
-export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
+export const ColorForm: React.FC<SizeFormProps> = ({ initialData }) => {
   const params = useParams();
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
 
-  const title = initialData ? "Edit color" : "Create size";
+  const title = initialData ? "Edit color" : "Create color";
   const description = initialData ? "Edit a colors." : "Add a new color";
   const action = initialData ? "Save changes" : "Create";
   const mensaje = initialData ? "Color saved" : "Color created";
@@ -44,8 +44,8 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
     ? "Error updating color"
     : "Error creating color";
 
-  const form = useForm<SizesRequest>({
-    resolver: zodResolver(SizesValidator),
+  const form = useForm<ColorRequest>({
+    resolver: zodResolver(colorValidator),
     defaultValues: initialData || {
       name: "",
       value: "",
@@ -55,7 +55,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
   const { handleSubmit, control } = form;
 
   const { mutate: onSubmit, isLoading: isLoadingCreate } = useMutation({
-    mutationFn: async (data: SizesRequest) => {
+    mutationFn: async (data: ColorRequest) => {
       const payload = {
         ...data,
       };
@@ -81,7 +81,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
       return toast({
         title: "Error",
         description: errorMensaje,
-        variant: initialData ? "default" : "destructive",
+        variant: "destructive",
       });
     },
   });
@@ -114,8 +114,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
         if (error.response?.status === 400) {
           return toast({
             title: "Error",
-            description:
-              "You can't delete this color because it has products",
+            description: "You can't delete this color because it has products",
             variant: "destructive",
           });
         }
@@ -180,11 +179,17 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
                 <FormItem>
                   <FormLabel>Value</FormLabel>
                   <FormControl>
+                    <div className="flex items-center gap-x-4">
                     <Input
                       disabled={isLoadingCreate}
-                      placeholder="value"
+                      placeholder="Color  value"
                       {...field}
                     />
+                    <div
+                      className="h-6 w-6 rounded-full"
+                      style={{ backgroundColor: field.value }}
+                    />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
