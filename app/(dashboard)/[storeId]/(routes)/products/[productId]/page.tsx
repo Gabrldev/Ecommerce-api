@@ -1,25 +1,53 @@
 import { ProductForm } from "@/components/forms/ProductForm";
 import { db } from "@/lib/db";
 
-type ProductPageProps = {
-  params: {
-    billboardId: string;
-  };
-};
 
-const ProductPage = async ({ params }: ProductPageProps) => {
+
+
+const ProductPage = async ({
+  params
+}: {
+  params: { productId: string, storeId: string }
+}) => {
   const product = await db.product.findUnique({
     where: {
-      id: params.billboardId,
+      id: params.productId,
+    },
+    include: {
+      images: true,
+    }
+  });
+
+  const categories = await db.category.findMany({
+    where: {
+      storeId: params.storeId,
     },
   });
-  return (
+
+  const sizes = await db.size.findMany({
+    where: {
+      storeId: params.storeId,
+    },
+  });
+
+  const colors = await db.color.findMany({
+    where: {
+      storeId: params.storeId,
+    },
+  });
+
+  return ( 
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <ProductForm initialData={product} />
+        <ProductForm 
+          categories={categories} 
+          colors={colors}
+          sizes={sizes}
+          initialData={product}
+        />
       </div>
     </div>
-  )
-};
+  );
+}
 
 export default ProductPage;

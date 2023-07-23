@@ -1,5 +1,5 @@
 import { SizeColumms } from "@/components/columms/Columms.sizes";
-import { SizesClient } from "@/components/SizesClient";
+import { SizesClient } from "@/components/clients/SizesClient"; 
 import { db } from "@/lib/db";
 import { format } from "date-fns";
 
