@@ -1,4 +1,4 @@
-import { CategoryForm } from "@/components/CategoriesForm";
+import { CategoryForm } from "@/components/forms/CategoriesForm";
 import { db } from "@/lib/db";
 
 type CategoryPageProps = {

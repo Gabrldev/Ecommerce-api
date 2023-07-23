@@ -1,4 +1,4 @@
-import { SizeColumms } from "@/components/Columms.sizes";
+import { SizeColumms } from "@/components/columms/Columms.sizes";
 import { SizesClient } from "@/components/SizesClient";
 import { db } from "@/lib/db";
 import { format } from "date-fns";

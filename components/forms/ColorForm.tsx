@@ -18,34 +18,34 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Heading } from "@/components/ui/heading";
 import { AlertModal } from "@/components/modals/alert-modal";
-import { Button } from "./ui/Button";
+import { Button } from "../ui/Button";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
-import { SizesRequest, SizesValidator } from "@/lib/validators/sizes";
+import { ColorRequest, colorValidator } from "@/lib/validators/color";
 
 interface SizeFormProps {
   initialData: Size | null;
 }
 
-export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
+export const ColorForm: React.FC<SizeFormProps> = ({ initialData }) => {
   const params = useParams();
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
 
-  const title = initialData ? "Edit size" : "Create size";
-  const description = initialData ? "Edit a sizes." : "Add a new size";
+  const title = initialData ? "Edit color" : "Create color";
+  const description = initialData ? "Edit a colors." : "Add a new color";
   const action = initialData ? "Save changes" : "Create";
-  const mensaje = initialData ? "Size saved" : "Size created";
+  const mensaje = initialData ? "Color saved" : "Color created";
   const mensajeDescription = initialData
-    ? "Update size sucesss"
-    : "Create size sucesss";
+    ? "Update color sucesss"
+    : "Create color sucesss";
   const errorMensaje = initialData
-    ? "Error updating size"
-    : "Error creating size";
+    ? "Error updating color"
+    : "Error creating color";
 
-  const form = useForm<SizesRequest>({
-    resolver: zodResolver(SizesValidator),
+  const form = useForm<ColorRequest>({
+    resolver: zodResolver(colorValidator),
     defaultValues: initialData || {
       name: "",
       value: "",
@@ -55,23 +55,23 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
   const { handleSubmit, control } = form;
 
   const { mutate: onSubmit, isLoading: isLoadingCreate } = useMutation({
-    mutationFn: async (data: SizesRequest) => {
+    mutationFn: async (data: ColorRequest) => {
       const payload = {
         ...data,
       };
       if (initialData) {
         await axios.patch(
-          `/api/${params.storeId}/sizes/${initialData.id}`,
+          `/api/${params.storeId}/colors/${initialData.id}`,
           payload
         );
       } else {
-        await axios.post(`/api/${params.storeId}/sizes`, payload);
+        await axios.post(`/api/${params.storeId}/colors`, payload);
       }
     },
 
     onSuccess: () => {
       router.refresh();
-      router.push(`/${params.storeId}/sizes`);
+      router.push(`/${params.storeId}/colors`);
       return toast({
         title: mensaje,
         description: mensajeDescription,
@@ -81,7 +81,7 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
       return toast({
         title: "Error",
         description: errorMensaje,
-        variant: initialData ? "default" : "destructive",
+        variant: "destructive",
       });
     },
   });
@@ -89,17 +89,17 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
   const { mutate: onDelete, isLoading: isLoadingDelate } = useMutation({
     mutationFn: async () => {
       const res = await axios.delete(
-        `/api/${params.storeId}/sizes/${params.sizeId}`
+        `/api/${params.storeId}/colors/${params.colorId}`
       );
       return res.data;
     },
 
     onSuccess: () => {
       router.refresh();
-      router.push(`/${params.storeId}/sizes`);
+      router.push(`/${params.storeId}/colors`);
       return toast({
-        title: "Category deleted",
-        description: "Category deleted sucesss",
+        title: "Color deleted",
+        description: "Color deleted sucesss",
       });
     },
     onError: (error) => {
@@ -107,22 +107,21 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
         if (error.response?.status === 401) {
           return toast({
             title: "Error",
-            description: "You don't have permissions to delete this Category",
+            description: "You don't have permissions to delete this color",
             variant: "destructive",
           });
         }
         if (error.response?.status === 400) {
           return toast({
             title: "Error",
-            description:
-              "You can't delete this Category because it has products",
+            description: "You can't delete this color because it has products",
             variant: "destructive",
           });
         }
       }
       return toast({
         title: "Error",
-        description: "Error deleting Category",
+        description: "Error deleting color",
         variant: "destructive",
       });
     },
@@ -180,11 +179,17 @@ export const SizeForm: React.FC<SizeFormProps> = ({ initialData }) => {
                 <FormItem>
                   <FormLabel>Value</FormLabel>
                   <FormControl>
+                    <div className="flex items-center gap-x-4">
                     <Input
                       disabled={isLoadingCreate}
-                      placeholder="value"
+                      placeholder="Color  value"
                       {...field}
                     />
+                    <div
+                      className="h-6 w-6 rounded-full"
+                      style={{ backgroundColor: field.value }}
+                    />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

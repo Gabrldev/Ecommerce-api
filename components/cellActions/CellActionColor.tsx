@@ -6,20 +6,20 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-} from "./ui/dropdown-menu";
-import { Button } from "./ui/Button";
+} from "../ui/dropdown-menu";
+import { Button } from "../ui/Button";
 import { CopyIcon, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useParams, useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { AlertModal } from "./modals/alert-modal";
+import { AlertModal } from "../modals/alert-modal";
 import axios from "axios";
-import { SizeColumms } from "./Columms.sizes";
+import { ColorColumms } from "../columms/Columms.colors"; 
 interface CelActionProps {
-  data: SizeColumms;
+  data: ColorColumms;
 }
-export const CellActionSize: React.FC<CelActionProps> = ({ data }) => {
+export const CellActionColor: React.FC<CelActionProps> = ({ data }) => {
   const router = useRouter();
 
   const params = useParams();
@@ -36,12 +36,12 @@ export const CellActionSize: React.FC<CelActionProps> = ({ data }) => {
 
   const { mutate: onDelate, isLoading, } = useMutation({
     mutationFn: async () => {
-      await axios.delete(`/api/${params.storeId}/sizes/${data.id}`);
+      await axios.delete(`/api/${params.storeId}/colors/${data.id}`);
     },
 
     onSuccess: () => {
       router.refresh();
-      router.push(`/${params.storeId}/sizes`);
+      router.push(`/${params.storeId}/colors`);
       toast({
         title: "Size deleted",
         description: "The size was deleted successfully",
@@ -76,7 +76,7 @@ export const CellActionSize: React.FC<CelActionProps> = ({ data }) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.storeId}/sizes/${data.id}`)
+              router.push(`/${params.storeId}/colors/${data.id}`)
             }
           >
             <Edit className="h-4 w-4 mr-2" />

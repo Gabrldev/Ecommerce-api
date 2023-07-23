@@ -7,7 +7,7 @@ import { Separator } from "./ui/separator";
 import { useParams, useRouter } from "next/navigation";
 import { DataTable } from "./ui/dataTable";
 import { ApiList } from "./ui/apiList";
-import { SizeColumms } from "./Columms.sizes";
+import { SizeColumms } from "./columms/Columms.sizes";
 
 interface SizeProps {
   data: SizeColumms[];

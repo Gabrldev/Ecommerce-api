@@ -1,4 +1,4 @@
-import {BillboardForm} from "@/components/BillboardForm";
+import { BillboardForm } from "@/components/forms/BillboardForm"; 
 import { db } from "@/lib/db";
 
 type BillboardPageProps = {

@@ -1,5 +1,5 @@
-import { ColorColumms } from "@/components/Coloumms.colors";
-import { ColorsClient } from "@/components/ColorsClient";
+import { ColorColumms } from "@/components/columms/Columms.colors"; 
+import { ColorsClient } from "@/components/clients/ColorsClient"; 
 import { db } from "@/lib/db";
 import { format } from "date-fns";
 

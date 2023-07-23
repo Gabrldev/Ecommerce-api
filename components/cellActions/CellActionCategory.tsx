@@ -1,25 +1,24 @@
 "use client";
-
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuLabel,
-} from "./ui/dropdown-menu";
-import { Button } from "./ui/Button";
+} from "../ui/dropdown-menu";
+import { Button } from "../ui/Button";
 import { CopyIcon, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useParams, useRouter } from "next/navigation";
 import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
-import { AlertModal } from "./modals/alert-modal";
+import { AlertModal } from "../modals/alert-modal";
 import axios from "axios";
-import { ColorColumms } from "./Coloumms.colors";
+import { CategoryColumms } from "../columms/Columms.category";
 interface CelActionProps {
-  data: ColorColumms;
+  data: CategoryColumms;
 }
-export const CellActionColor: React.FC<CelActionProps> = ({ data }) => {
+export const CellActionCategory: React.FC<CelActionProps> = ({ data }) => {
   const router = useRouter();
 
   const params = useParams();
@@ -36,15 +35,15 @@ export const CellActionColor: React.FC<CelActionProps> = ({ data }) => {
 
   const { mutate: onDelate, isLoading, } = useMutation({
     mutationFn: async () => {
-      await axios.delete(`/api/${params.storeId}/colors/${data.id}`);
+      await axios.delete(`/api/${params.storeId}/categories/${data.id}`);
     },
 
     onSuccess: () => {
       router.refresh();
-      router.push(`/${params.storeId}/colors`);
+      router.push(`/${params.storeId}/categories`);
       toast({
-        title: "Size deleted",
-        description: "The size was deleted successfully",
+        title: "Category deleted",
+        description: "The Category was deleted successfully",
       });
 
       setIsOpen(false);
@@ -52,7 +51,7 @@ export const CellActionColor: React.FC<CelActionProps> = ({ data }) => {
     onError: () => {
       toast({
         title: "Error",
-        description: "The size was not deleted",
+        description: "The Category was not deleted",
       });
     },
   });
@@ -76,7 +75,7 @@ export const CellActionColor: React.FC<CelActionProps> = ({ data }) => {
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
             onClick={() =>
-              router.push(`/${params.storeId}/colors/${data.id}`)
+              router.push(`/${params.storeId}/categories/${data.id}`)
             }
           >
             <Edit className="h-4 w-4 mr-2" />

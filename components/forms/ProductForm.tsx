@@ -4,8 +4,9 @@ import { useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Trash } from "lucide-react";
-import { Billboard, Category } from "@prisma/client";
+import { Product } from "@prisma/client";
 import { useParams, useRouter } from "next/navigation";
+
 import { Input } from "@/components/ui/input";
 import {
   Form,
@@ -18,71 +19,66 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Heading } from "@/components/ui/heading";
 import { AlertModal } from "@/components/modals/alert-modal";
-import { Button } from "./ui/Button";
-import { CategoryRequest, CategoryValidator } from "@/lib/validators/category";
+import { Button } from "../ui/Button"; 
+import ImageUpload from "../ui/ImageUpload";
+import {
+  productsRequest,
+  productsValidator,
+} from "@/lib/validators/products";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "./ui/select";
 
-interface CategoryFormProps {
-  initialData: Category | null;
-  billboards: Billboard[];
+interface ProductFormProps {
+  initialData: Product | null;
 }
 
-export const CategoryForm: React.FC<CategoryFormProps> = ({
+export const ProductForm: React.FC<ProductFormProps> = ({
   initialData,
-  billboards,
 }) => {
   const params = useParams();
   const router = useRouter();
 
   const [open, setOpen] = useState(false);
 
-  const title = initialData ? "Edit Category" : "Create Category";
-  const description = initialData ? "Edit a Category." : "Add a new Category";
+  const title = initialData ? "Edit products" : "Create products";
+  const description = initialData ? "Edit a products." : "Add a new products";
   const action = initialData ? "Save changes" : "Create";
-  const mensaje = initialData ? "Category saved" : "Category created";
+  const mensaje = initialData ? "products saved" : "products created";
   const mensajeDescription = initialData
-    ? "Update Category sucesss"
-    : "Create Category sucesss";
+    ? "Update products sucesss"
+    : "Create products sucesss";
   const errorMensaje = initialData
-    ? "Error updating Category"
-    : "Error creating Category";
+    ? "Error updating products"
+    : "Error creating products";
 
-  const form = useForm<CategoryRequest>({
-    resolver: zodResolver(CategoryValidator),
+  const form = useForm<productsRequest>({
+    resolver: zodResolver(productsValidator),
     defaultValues: initialData || {
-      name: "",
-      billboardId: "",
+      label: "",
+      imageUrl: "",
     },
   });
 
   const { handleSubmit, control } = form;
 
   const { mutate: onSubmit, isLoading: isLoadingCreate } = useMutation({
-    mutationFn: async (data: CategoryRequest) => {
+    mutationFn: async (data: productsRequest) => {
       const payload = {
         ...data,
       };
       if (initialData) {
         await axios.patch(
-          `/api/${params.storeId}/categories/${initialData.id}`,
+          `/api/${params.storeId}/productss/${initialData.id}`,
           payload
         );
       } else {
-        await axios.post(`/api/${params.storeId}/categories`, payload);
+        await axios.post(`/api/${params.storeId}/productss`, payload);
       }
     },
 
     onSuccess: () => {
       router.refresh();
-      router.push(`/${params.storeId}/categories`);
+      router.push(`/${params.storeId}/productss`);
       return toast({
         title: mensaje,
         description: mensajeDescription,
@@ -100,17 +96,17 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
   const { mutate: onDelete, isLoading: isLoadingDelate } = useMutation({
     mutationFn: async () => {
       const res = await axios.delete(
-        `/api/${params.storeId}/categories/${params.categoriesId}`
+        `/api/${params.storeId}/productss/${params.productsId}`
       );
       return res.data;
     },
 
     onSuccess: () => {
       router.refresh();
-      router.push(`/${params.storeId}/categories`);
+      router.push(`/${params.storeId}/productss`);
       return toast({
-        title: "Category deleted",
-        description: "Category deleted sucesss",
+        title: "products deleted",
+        description: "products deleted sucesss",
       });
     },
     onError: (error) => {
@@ -118,7 +114,7 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
         if (error.response?.status === 401) {
           return toast({
             title: "Error",
-            description: "You don't have permissions to delete this Category",
+            description: "You don't have permissions to delete this products",
             variant: "destructive",
           });
         }
@@ -126,14 +122,14 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
           return toast({
             title: "Error",
             description:
-              "You can't delete this Category because it has products",
+              "You can't delete this products because it has products",
             variant: "destructive",
           });
         }
       }
       return toast({
         title: "Error",
-        description: "Error deleting Category",
+        description: "Error deleting products",
         variant: "destructive",
       });
     },
@@ -166,52 +162,38 @@ export const CategoryForm: React.FC<CategoryFormProps> = ({
           onSubmit={handleSubmit((data) => onSubmit(data))}
           className="space-y-8 w-full"
         >
+          <FormField
+            control={control}
+            name="imageUrl"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Background image</FormLabel>
+                <FormControl>
+                  <ImageUpload
+                    value={field.value ? [field.value] : []}
+                    disabled={isLoadingCreate}
+                    onChange={(url) => field.onChange(url)}
+                    onRemove={() => field.onChange("")}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <div className="md:grid md:grid-cols-3 gap-8">
             <FormField
               control={control}
-              name="name"
+              name="label"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Name</FormLabel>
+                  <FormLabel>Label</FormLabel>
                   <FormControl>
                     <Input
                       disabled={isLoadingCreate}
-                      placeholder="Category name"
+                      placeholder="products label"
                       {...field}
                     />
                   </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={control}
-              name="billboardId"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Billboard</FormLabel>
-                  <Select
-                    disabled={isLoadingCreate}
-                    onValueChange={field.onChange}
-                    value={field.value}
-                    defaultValue={field.value}
-                  >
-                    <FormControl>
-                      <SelectTrigger>
-                        <SelectValue
-                          defaultValue={field.value}
-                          placeholder="Select a billboard"
-                        />
-                      </SelectTrigger>
-                    </FormControl>
-                    <SelectContent>
-                      {billboards.map((billboard) => (
-                        <SelectItem key={billboard.id} value={billboard.id}>
-                          {billboard.label}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
                   <FormMessage />
                 </FormItem>
               )}

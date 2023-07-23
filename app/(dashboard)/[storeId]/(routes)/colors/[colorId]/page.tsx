@@ -1,4 +1,4 @@
-import { ColorForm } from "@/components/ColorForm";
+import { ColorForm } from "@/components/forms/ColorForm";
 import { db } from "@/lib/db";
 
 type ColorPageProps = {

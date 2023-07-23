@@ -1,5 +1,5 @@
-import { CategoryClient } from "@/components/CategoryClient";
-import { CategoryColumms } from "@/components/Columms.category";
+import { CategoryClient } from "@/components/clients/CategoryClient"; 
+import { CategoryColumms } from "@/components/columms/Columms.category"; 
 import { db } from "@/lib/db";
 import { format } from "date-fns";
 

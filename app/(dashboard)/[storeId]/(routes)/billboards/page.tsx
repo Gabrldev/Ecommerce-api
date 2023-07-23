@@ -1,4 +1,4 @@
-import { BillboardClient } from "@/components/BillboardClient";
+import { BillboardClient } from "@/components/clients/BillboardClient";
 import { BillboardColumms } from "@/components/columms";
 import { db } from "@/lib/db";
 import { format } from "date-fns";
