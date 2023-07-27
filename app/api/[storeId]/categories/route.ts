@@ -50,3 +50,23 @@ export async function POST(
     return new Response("Internal Server Error", { status: 500 });
   }
 }
+export async function GET(
+  req: Request,
+  { params }: { params: { storeId: string } }
+) {
+  try {
+    if (!params.storeId) {
+      return new Response("Missing storeId", { status: 400 });
+    }
+
+    const categories = await db.category.findMany({
+      where: {
+        storeId: params.storeId,
+      },
+    });
+
+    return new Response(JSON.stringify(categories), { status: 200 });
+  } catch (error) {
+    return new Response("Internal Server Error", { status: 500 });
+  }
+}

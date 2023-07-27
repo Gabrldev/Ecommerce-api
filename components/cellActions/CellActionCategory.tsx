@@ -33,7 +33,7 @@ export const CellActionCategory: React.FC<CelActionProps> = ({ data }) => {
     });
   };
 
-  const { mutate: onDelate, isLoading, } = useMutation({
+  const { mutate: onDelate, isLoading } = useMutation({
     mutationFn: async () => {
       await axios.delete(`/api/${params.storeId}/categories/${data.id}`);
     },
@@ -49,9 +49,11 @@ export const CellActionCategory: React.FC<CelActionProps> = ({ data }) => {
       setIsOpen(false);
     },
     onError: () => {
-      toast({
+      return toast({
         title: "Error",
-        description: "The Category was not deleted",
+        description:
+          "Make sure you removed all products using this size first.",
+        variant: "destructive",
       });
     },
   });

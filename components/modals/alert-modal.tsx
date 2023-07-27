@@ -37,7 +37,7 @@ export const AlertModal: React.FC<AlertModalProps> = ({
           Cancel
         </Button>
 
-        <Button isLoading={isLoading} onClick={onConfirm} variant='default'>Confirm</Button>
+        <Button isLoading={isLoading} onClick={onConfirm} variant='destructive'>Confirm</Button>
       </div>
     </Modal>
   );

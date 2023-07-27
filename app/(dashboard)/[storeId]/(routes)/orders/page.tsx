@@ -1,5 +1,6 @@
-import { BillboardClient } from "@/components/clients/BillboardClient";
-import { BillboardColumms } from "@/components/columms";
+
+import { OrderClient } from "@/components/clients/OrderClient";
+import { OrderColumms } from "@/components/columms/Columms.order";
 import { db } from "@/lib/db";
 import { formatter } from "@/lib/utils";
 import { format } from "date-fns";
@@ -26,7 +27,7 @@ export default async function OrderPage({ params }: Props) {
     },
   });
 
-  const formattedOrders: BillboardColumms[] = orders.map((item) => {
+  const formattedOrders: OrderColumms[] = orders.map((item) => {
     return {
       id: item.id,
       phone: item.phone,
@@ -39,13 +40,14 @@ export default async function OrderPage({ params }: Props) {
           return total + Number(item.product.price);
         }, 0)
       ),
+      isPaid: item.isPaid,
       createdAt: format(new Date(item.createdAt), "MMMM-do-yyyy"),
     };
   });
   return (
     <div className="flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
-        <BillboardClient data={formattedOrders} />
+        <OrderClient data={formattedOrders} />
       </div>
     </div>
   );
