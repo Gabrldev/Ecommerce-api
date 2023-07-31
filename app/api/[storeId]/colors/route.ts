@@ -28,8 +28,29 @@ export async function POST(
 
     return new Response("Color created", { status: 200 });
   } catch (error) {
-    if (error instanceof ZodError) return new Response("Invalid data provided", { status: 400 });
+    if (error instanceof ZodError)
+      return new Response("Invalid data provided", { status: 400 });
 
-    return new Response('Internal server error', { status: 500 })
+    return new Response("Internal server error", { status: 500 });
+  }
+}
+
+export async function GET(
+  req: Request,
+  { params }: { params: { storeId: string } }
+) {
+  try {
+    if (!params.storeId)
+      return new Response("Invalid store id", { status: 400 });
+
+    const colors = await db.color.findMany({
+      where: {
+        storeId: params.storeId,
+      },
+    });
+
+    return new Response(JSON.stringify(colors), { status: 200 });
+  } catch (error) {
+    return new Response("Internal server error", { status: 500 });
   }
 }
