@@ -129,7 +129,7 @@ function SettingsForm({ initialData }: Props) {
       toast({
         title: "Error",
         description: "An error occurred while trying to delete the store",
-        variant: "destructive",
+        variant: "destructive"
       });
     },
   });
