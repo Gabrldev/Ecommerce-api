@@ -6,7 +6,6 @@ import {
   DropdownMenuItem,
   DropdownMenuLabel,
 } from "../ui/dropdown-menu";
-import { Button } from "../ui/button";
 import { CopyIcon, Edit, MoreHorizontal, Trash } from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 import { useParams, useRouter } from "next/navigation";
@@ -15,6 +14,7 @@ import { useState } from "react";
 import { AlertModal } from "../modals/alert-modal";
 import axios from "axios";
 import { CategoryColumms } from "../columms/Columms.category";
+import { Button } from "../ui/button";
 interface CelActionProps {
   data: CategoryColumms;
 }

@@ -5,7 +5,6 @@ import { Popover, PopoverTrigger } from "./ui/popover";
 import { useStoreModal } from "@/hooks/use-store-modal";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import { Button } from "./ui/button";
 import {
   Check,
   ChevronsUpDown,
@@ -24,6 +23,7 @@ import {
   CommandList,
   CommandSeparator,
 } from "./ui/command";
+import { Button } from "./ui/button";
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<
   typeof PopoverTrigger

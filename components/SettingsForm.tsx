@@ -1,7 +1,6 @@
 "use client";
 import { Store } from "@prisma/client";
 import { Heading } from "./ui/heading";
-import { Button } from "./ui/button";
 import { Trash } from "lucide-react";
 import { Separator } from "./ui/separator";
 import { useForm } from "react-hook-form";
@@ -20,6 +19,7 @@ import { AlertModal } from "./modals/alert-modal";
 import { useState } from "react";
 import { ApiAlert } from "./ui/api-alert";
 import { useOrigin } from "@/hooks/use-origin";
+import { Button } from "./ui/button";
 
 interface Props {
   initialData: Store;
