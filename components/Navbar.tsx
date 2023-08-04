@@ -3,6 +3,7 @@ import MainNav from "./MainNav";
 import StoreSwitch from "./StoreSwitch";
 import { redirect } from "next/navigation";
 import { db } from "@/lib/db";
+import { ModeToggle } from "./toggletheme";
 
 type Props = {};
 async function Navbar({}: Props) {
@@ -23,6 +24,7 @@ async function Navbar({}: Props) {
         <StoreSwitch items={stores} />
         <MainNav className="mx-6" />
         <div className="ml-auto flex items-center space-x-4">
+          <ModeToggle />
           <UserButton afterSignOutUrl="/" />
         </div>
       </div>

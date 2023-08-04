@@ -2,7 +2,6 @@
 
 import { useOrigin } from "@/hooks/use-origin";
 import { useParams } from "next/navigation";
-import { useRouter } from "next/router";
 import { ApiAlert } from "./api-alert";
 
 interface ApiListProps {
