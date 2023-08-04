@@ -6,7 +6,7 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "./dialog"
+} from "./Dialog"
 
 interface Props {
   title: string;
