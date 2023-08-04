@@ -18,7 +18,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Heading } from "@/components/ui/heading";
 import { AlertModal } from "@/components/modals/alert-modal";
-import { Button } from "../ui/Button";
+import { Button } from "../ui/button";
 import { CategoryRequest, CategoryValidator } from "@/lib/validators/category";
 import { useMutation } from "@tanstack/react-query";
 import { toast } from "@/hooks/use-toast";

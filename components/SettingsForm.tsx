@@ -1,7 +1,7 @@
 "use client";
 import { Store } from "@prisma/client";
 import { Heading } from "./ui/heading";
-import { Button } from "./ui/Button";
+import { Button } from "./ui/button";
 import { Trash } from "lucide-react";
 import { Separator } from "./ui/separator";
 import { useForm } from "react-hook-form";

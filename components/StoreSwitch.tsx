@@ -5,7 +5,7 @@ import { Popover, PopoverTrigger } from "./ui/popover";
 import { useStoreModal } from "@/hooks/use-store-modal";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
-import { Button } from "./ui/Button";
+import { Button } from "./ui/button";
 import {
   Check,
   ChevronsUpDown,

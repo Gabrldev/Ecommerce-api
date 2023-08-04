@@ -20,7 +20,7 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { Heading } from "@/components/ui/heading";
 import { AlertModal } from "@/components/modals/alert-modal";
-import { Button } from "../ui/Button";
+import { Button } from "../ui/button";
 import ImageUpload from "../ui/ImageUpload";
 import { ProductsRequest, productsValidator } from "@/lib/validators/products";
 import { useMutation } from "@tanstack/react-query";

@@ -1,7 +1,7 @@
 "use client";
 
 import { Plus } from "lucide-react";
-import { Button } from "../ui/Button";
+import { Button } from "../ui/button";
 import { Heading } from "../ui/heading";
 import { Separator } from "../ui/separator";
 import { useParams, useRouter } from "next/navigation";
