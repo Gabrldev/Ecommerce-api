@@ -23,7 +23,7 @@ import {
   CommandList,
   CommandSeparator,
 } from "./ui/command";
-import { Button } from "./ui/button";
+import { Button } from "./ui/Button";
 
 type PopoverTriggerProps = React.ComponentPropsWithoutRef<
   typeof PopoverTrigger

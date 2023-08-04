@@ -19,7 +19,7 @@ import { AlertModal } from "./modals/alert-modal";
 import { useState } from "react";
 import { ApiAlert } from "./ui/api-alert";
 import { useOrigin } from "@/hooks/use-origin";
-import { Button } from "./ui/button";
+import { Button } from "./ui/Button";
 
 interface Props {
   initialData: Store;

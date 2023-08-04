@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "./button";
+import { Button } from "./Button";
 import { Input } from "./input";
 import {
   ColumnDef,

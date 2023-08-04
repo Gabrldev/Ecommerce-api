@@ -15,7 +15,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { AlertModal } from "../modals/alert-modal";
 import axios from "axios";
-import { Button } from "../ui/button";
+import { Button } from "../ui/Button";
 interface CelActionProps {
   data: BillboardColumms;
 }

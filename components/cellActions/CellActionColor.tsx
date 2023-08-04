@@ -15,7 +15,7 @@ import { useState } from "react";
 import { AlertModal } from "../modals/alert-modal";
 import axios from "axios";
 import { ColorColumms } from "../columms/Columms.colors"; 
-import { Button } from "../ui/button";
+import { Button } from "../ui/Button";
 interface CelActionProps {
   data: ColorColumms;
 }

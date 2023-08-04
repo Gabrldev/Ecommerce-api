@@ -12,8 +12,8 @@ import { Input } from "../ui/input";
 import { useMutation } from "@tanstack/react-query";
 import axios, {  AxiosError } from "axios";
 import { Label } from "../ui/label";
-import { Button } from "../ui/button";
 import { toast } from "@/hooks/use-toast";
+import { Button } from "../ui/Button";
 
 export const StoreModal = () => {
   const storeModal = useStoreModal();
